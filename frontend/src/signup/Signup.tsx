@@ -1,48 +1,84 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const SignUp= ()=>{
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+import axios from "axios";
 
-    const navigator = useNavigate();
+const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const signUp = ()=>{
-        if(password==confirmPassword){
-            console.log("kk")
+  const navigator = useNavigate();
+
+  const signUp = async() => {
+    if (password == confirmPassword) {
+      console.log("kk");
+      try {
+        const response = await axios.post("http://localhost:3001/auth/signup", {
+          username,
+          password,
+          email,
+          confirmPassword,
+        });
+        if(response){
+            console.log(response)
+            navigator("/login");
         }
-        navigator("/login")
+      } catch (error) {
+        console.log(error);
+      }
+          //navigator("/login");
 
     }
-    return(<div>
-        <h1>Sign up form</h1>
-        <form onSubmit={()=>signUp()}>
-            <div id="username">
-                <label>Username</label>
-                <input value={username} onChange={(e)=>setUsername(e.target.value)} />
-            </div>
+  };
+  return (
+    <div className="main">
+      <form className="form" onSubmit={(e)=>{e.preventDefault(); signUp() }}>
+        <p className="heading">Sign up</p>
 
-             <div id="email">
-                <label>Email</label>
-                <input value={email} onChange={(e)=>setEmail(e.target.value)} />
-            </div>
+        <div className="cards">
+          <div className="card" id="username">
+            <label className="label">Username</label>
+            <input
+              className="inputBox"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-            <div id="password">
-                <label>Password</label>
-                <input value={password} onChange={(e)=>setPassword(e.target.value)} />
-            </div>
+          <div className="card" id="email">
+            <label className="label">Email</label>
+            <input
+              className="inputBox"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-            <div id="confirmPassword">
-                <label>Confirm Password</label>
-                <input value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />
-            </div>           
+          <div className="card" id="password">
+            <label className="label">Password</label>
+            <input
+              className="inputBox"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-            <button type="submit">
-                Sign Up
-            </button>
+          <div className="card" id="confirmPassword">
+            <label className="label">Confirm Password</label>
+            <input
+              className="inputBox"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+        </div>
 
-        </form>
-    </div>)
-}
+        <button className="button" type="submit">
+          Sign Up
+        </button>
+      </form>
+    </div>
+  );
+};
 export default SignUp;

@@ -9,7 +9,7 @@ function Home (){
 function App() {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true }}>
       <Routes>
          <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />} />
