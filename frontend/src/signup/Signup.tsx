@@ -20,7 +20,7 @@ const SignUp = () => {
           email,
           confirmPassword,
         });
-        if(response){
+        if(response.status==200){
             console.log(response)
             navigator("/login");
         }

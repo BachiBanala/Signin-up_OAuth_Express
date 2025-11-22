@@ -1,11 +1,13 @@
 // import { useState } from 'react'
+import axios from "axios"
 import Login from "./login/Login.jsx"
 import SignUp from './signup/Signup.jsx'
+import Home from "./Home/Home.jsx"
 import {BrowserRouter,Routes, Route} from "react-router-dom"
+import { useEffect } from "react"
+
 // import './App.css'
-function Home (){
-  return <p>home page</p>
-}
+
 function App() {
 
   return (
