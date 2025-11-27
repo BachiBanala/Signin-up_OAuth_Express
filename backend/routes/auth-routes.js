@@ -1,27 +1,15 @@
+// import { login, logout, signUp } from "../controller/authController"
 const express = require("express")
 const JWT = require("jsonwebtoken")
 const router = express.Router()
+const {login, logout, signUp} = require("../controller/authController")
 
 
 
-router.post("/login", (req, res)=>{
-    const {username, password} = req.body;
-    //check user exits 
-    //if yes generate jwt token
-    const accessToken = JWT.sign({username, password}, process.env.SECRET) 
-    res.cookie("accessToken", accessToken)  
-    res.send({username, password, accessToken})
-})
+router.post("/login", login)
 
-router.get("/logout", (req, res)=>{
-    res.clearCookie("accessToken")
-    res.send("logged out")
-})
+router.get("/logout", logout)
 
-router.post("/signup",(req, res)=>{
-    const {username, password, email, confirmPassword} = req.body;
-    console.log({username, password, email, confirmPassword})
-    res.send({username, password, email, confirmPassword})
-})
+router.post("/signup",signUp)
 
 module.exports = router;
